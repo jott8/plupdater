@@ -1,14 +1,14 @@
 import spotipy, time, sys
 from spotipy.cache_handler import CacheFileHandler
-from spotipy.oauth2 import SpotifyOAuth
-from datetime import datetime
+from spotipy.oauth2        import SpotifyOAuth
+from datetime              import datetime
 
 class User:
     username: str
     copy_playlist_id: str
 
     def __init__(self, username, copy_playlist_id) -> None:
-        self.username = username
+        self.username         = username
         self.copy_playlist_id = copy_playlist_id
 
 
@@ -18,8 +18,8 @@ class Track:
     artist: str
 
     def __init__(self, track_id: str, title: str, artist: str) -> None:
-        self.tid = track_id
-        self.title = title
+        self.tid    = track_id
+        self.title  = title
         self.artist = artist
 
     def __eq__(self, other):
@@ -45,7 +45,7 @@ class Playlist:
 
 def get_playlist(id=None) -> Playlist:
     if id: results = sp.playlist_tracks(id)
-    else: results = sp.current_user_saved_tracks() 
+    else: results  = sp.current_user_saved_tracks() 
 
     tracks_raw = results['items']
 
@@ -59,7 +59,7 @@ def get_playlist(id=None) -> Playlist:
 
 
 def get_playlist_diff(playlist1: Playlist, playlist2: Playlist):
-    new_tracks = [Track(track.tid, track.title, track.artist) for track in playlist1.tracks if track not in playlist2.tracks]
+    new_tracks     = [Track(track.tid, track.title, track.artist) for track in playlist1.tracks if track not in playlist2.tracks]
     deleted_tracks = [Track(track.tid, track.title, track.artist) for track in playlist2.tracks if track not in playlist1.tracks]
 
     return new_tracks, deleted_tracks
@@ -133,7 +133,6 @@ if __name__ == '__main__':
     DEBUG = sys.argv[1] == 'TRUE'
 
     sp, user = get_spotify_user()
-    
 
     if DEBUG: log_file_name = f'logs/{user.username}_debug.csv'
     else: log_file_name = f'logs/{user.username}.csv'
@@ -141,8 +140,8 @@ if __name__ == '__main__':
     date = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
     start_time = time.time()
 
-    ls_playlist = get_playlist()
-    copy_playlist = get_playlist(user.copy_playlist_id)
+    ls_playlist                = get_playlist()
+    copy_playlist              = get_playlist(user.copy_playlist_id)
     new_tracks, deleted_tracks = get_playlist_diff(ls_playlist, copy_playlist)
 
     print(f'New: {new_tracks}\n\nDeleted: {deleted_tracks}\n')

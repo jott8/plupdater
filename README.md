@@ -13,3 +13,5 @@ After scanning and editing the playlist(s), a changelog will be written to "logs
 
 Run the script via "script.sh/DEBUG_MODE/PATH/REDIRECT_URI where DEBUG can either be 'TRUE' or 'FALSE', PATH is the path to the plupdater dir and REDIRECT_URI the URI the users provided in the Spotify dashboard app (has to be the same for all users).
 
+### TODO
+[] Generate HTML from changelog
