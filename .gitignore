@@ -1,0 +1,7 @@
+html/
+users.*
+.cache-*
+.cache
+.cache.*
+logs/
+.venv/
